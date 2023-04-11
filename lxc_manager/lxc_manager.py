@@ -1,12 +1,15 @@
+import logging
+
+import urllib3
+from proxmoxer import ProxmoxAPI
+
 from .cli import parse_args
 from .config import load_config
-from .container import (
-    create_lxc_container,
-    start_container,
-)
+from .container import create_lxc_container, start_container
 from .log_config import setup_logging
-import logging
-from proxmoxer import ProxmoxAPI
+from .name_generator import generate_container_name
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +38,8 @@ def main():
 
     # Crée les containers
     for i in range(num_containers):
-        container_name = f"{container_name_prefix}-{i+1}"
+        container_name = generate_container_name(container_name_prefix)
+
         config["container_name"] = container_name
 
         vm_id = create_lxc_container(proxmox, node_name, config)
