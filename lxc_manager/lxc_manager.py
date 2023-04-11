@@ -5,7 +5,7 @@ from proxmoxer import ProxmoxAPI
 
 from .cli import parse_args
 from .config import load_config
-from .container import create_lxc_container, start_container
+from .container import create_lxc_container, start_container, delete_container
 from .log_config import setup_logging
 from .name_generator import generate_container_name
 
@@ -33,22 +33,26 @@ def main():
     )
 
     node_name = config["node_name"]
-    container_name_prefix = config["container_name_prefix"]
-    num_containers = args.num_containers or config["num_containers"]
 
-    # Crée les containers
-    for i in range(num_containers):
-        container_name = generate_container_name(container_name_prefix)
+    if args.delete:
+        vm_id = args.delete
+        delete_container(proxmox, node_name, vm_id)
+    else:
+        container_name_prefix = config["container_name_prefix"]
+        num_containers = args.num_containers or config["num_containers"]
 
-        config["container_name"] = container_name
+        # Crée les containers
+        for i in range(num_containers):
+            container_name = generate_container_name(container_name_prefix)
+            config["container_name"] = container_name
 
-        vm_id = create_lxc_container(proxmox, node_name, config)
+            vm_id = create_lxc_container(proxmox, node_name, config)
 
-        logger.info(
-            f"Container {container_name} (ID: {vm_id}) a été créé et configuré."
-        )
+            start_container(proxmox, node_name, vm_id)
 
-        start_container(proxmox, node_name, vm_id)
+            logger.info(
+                f"Container {container_name} (ID: {vm_id}) a été créé et configuré."
+            )
 
 
 if __name__ == "__main__":

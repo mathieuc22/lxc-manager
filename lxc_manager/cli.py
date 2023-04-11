@@ -3,7 +3,7 @@ import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Crée des containers LXC à partir d'un fichier de configuration YAML."
+        description="Gestionnaire de conteneurs LXC pour Proxmox"
     )
     parser.add_argument(
         "-n",
@@ -19,5 +19,6 @@ def parse_args():
         default="INFO",
         help="Niveau de journalisation (DEBUG, INFO, WARNING, ERROR, CRITICAL). Par défaut : INFO.",
     )
+    parser.add_argument("--delete", type=int, help="ID du conteneur à supprimer")
     args = parser.parse_args()
     return args
