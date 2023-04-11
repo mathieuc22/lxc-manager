@@ -1,0 +1,8 @@
+num_containers: 1
+container_name_prefix: dev
+template: local:vztmpl/debian-11-standard_11.3-0_amd64.tar.gz
+storage: local-lvm
+net0: name=eth0,bridge=vmbr0,ip=dhcp
+network:
+  dhcp: true
+  bridge: vmbr0
