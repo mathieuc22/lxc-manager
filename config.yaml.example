@@ -1,4 +1,7 @@
-node_name: pve2
+# Configuration du nœud Proxmox
+node_name: pve
+
+# Paramètres du conteneur
 num_containers: 1
 container_name_prefix: dev
 template: local:vztmpl/debian-11-standard_11.3-0_amd64.tar.gz

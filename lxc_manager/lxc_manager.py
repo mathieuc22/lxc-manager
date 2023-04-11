@@ -1,11 +1,12 @@
 import logging
+import sys
 
 import urllib3
 from proxmoxer import ProxmoxAPI
 
 from .cli import parse_args
 from .config import load_config
-from .container import create_lxc_container, start_container, delete_container
+from .container import create_lxc_container, delete_container, start_container
 from .log_config import setup_logging
 from .name_generator import generate_container_name
 
@@ -34,10 +35,13 @@ def main():
 
     node_name = config["node_name"]
 
-    if args.delete:
-        vm_id = args.delete
+    if args.command == "delete":
+        vm_id = args.vm_id
         delete_container(proxmox, node_name, vm_id)
-    else:
+    elif args.command == "start":
+        vm_id = args.vm_id
+        start_container(proxmox, node_name, vm_id)
+    elif args.command == "create":
         container_name_prefix = config["container_name_prefix"]
         num_containers = args.num_containers or config["num_containers"]
 

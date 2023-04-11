@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 
 def load_config():
-    general_config_path = os.path.join(os.path.dirname(__file__), "config.yaml")
+    general_config_path = os.path.join(os.path.dirname(__file__), "..", "config.yaml")
     load_dotenv()
 
     with open(general_config_path, "r") as general_file:
