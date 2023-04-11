@@ -69,7 +69,7 @@ def start_container(proxmox, node_name, vm_id):
 
     while True:
         task_status = proxmox.nodes(node_name).tasks(taskid).status.get()
-        if task_status["status"] == "st opped":
+        if task_status["status"] == "stopped":
             if task_status["exitstatus"] == "OK":
                 logger.info(f"Conteneur (ID: {vm_id}) démarré.")
             else:
