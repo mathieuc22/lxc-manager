@@ -1,5 +1,4 @@
 import logging
-import sys
 
 import urllib3
 from proxmoxer import ProxmoxAPI
