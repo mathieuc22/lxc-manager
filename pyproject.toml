@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "lxc-manager"
+version = "0.1.0"
+description = ""
+authors = ["Mathieu <mathieu.collet@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^23.3.0"
+flake8 = "^6.0.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
