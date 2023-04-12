@@ -4,6 +4,9 @@ version = "0.1.0"
 description = ""
 authors = ["Mathieu <mathieu.collet@gmail.com>"]
 
+[tool.poetry.scripts]
+lxcm = "lxc_manager.lxc_manager:main"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 proxmoxer = "^2.0.1"
