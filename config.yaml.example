@@ -8,6 +8,7 @@ template: local:vztmpl/debian-11-standard_11.3-0_amd64.tar.gz
 storage: local-lvm
 memory: 512
 swap: 512
+cores: 4
 net0: name=eth0,bridge=vmbr0,ip=dhcp
 features: nesting=1
 network:

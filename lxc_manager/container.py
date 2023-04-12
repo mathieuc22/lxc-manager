@@ -28,6 +28,7 @@ def create_lxc_container(proxmox, node_name, config):
     memory = config["memory"]
     swap = config["swap"]
     net0 = config["net0"]
+    cores = config["cores"]
     features = config["features"]
 
     next_vmid = get_next_available_id(proxmox, node_name)
@@ -39,7 +40,7 @@ def create_lxc_container(proxmox, node_name, config):
         "storage": storage,
         "memory": memory,
         "swap": swap,
-        "cores": 1,
+        "cores": cores,
         "password": root_password,
         "net0": net0,
         "features": features,
