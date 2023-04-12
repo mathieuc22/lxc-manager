@@ -18,6 +18,11 @@ def parse_args():
         help="Le nombre de containers à créer.",
     )
 
+    create_subparsers = create_parser.add_subparsers(dest="env_type", required=False)
+    create_subparsers.add_parser("node", help="Créer des conteneurs Node.js")
+    create_subparsers.add_parser("python", help="Créer des conteneurs Python")
+    create_subparsers.add_parser("dotnet", help="Créer des conteneurs .NET")
+
     # Sous-commande 'start'
     start_parser = subparsers.add_parser("start", help="Démarrer un conteneur")
     start_parser.add_argument(
