@@ -9,6 +9,7 @@ storage: local-lvm
 memory: 512
 swap: 512
 net0: name=eth0,bridge=vmbr0,ip=dhcp
+features: nesting=1
 network:
   dhcp: true
   bridge: vmbr0

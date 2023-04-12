@@ -1,5 +1,4 @@
 import logging
-import time
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +28,7 @@ def create_lxc_container(proxmox, node_name, config):
     memory = config["memory"]
     swap = config["swap"]
     net0 = config["net0"]
+    features = config["features"]
 
     next_vmid = get_next_available_id(proxmox, node_name)
 
@@ -42,6 +42,7 @@ def create_lxc_container(proxmox, node_name, config):
         "cores": 1,
         "password": root_password,
         "net0": net0,
+        "features": features,
         "ssh-public-keys": public_key,
     }
     node = proxmox.nodes(node_name)
