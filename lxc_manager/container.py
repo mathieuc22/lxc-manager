@@ -45,41 +45,15 @@ def create_lxc_container(proxmox, node_name, config):
         "ssh-public-keys": public_key,
     }
     node = proxmox.nodes(node_name)
-    taskid = node.lxc.create(**newcontainer)
-
-    while True:
-        task_status = proxmox.nodes(node_name).tasks(taskid).status.get()
-        if task_status["status"] == "stopped":
-            if task_status["exitstatus"] == "OK":
-                logger.info(f"Container {container_name} (ID: {next_vmid}) a été créé.")
-            else:
-                logger.error(
-                    f"Échec de la création du conteneur {container_name} (ID: {next_vmid}): {task_status['exitstatus']}"
-                )
-            break
-        time.sleep(
-            2
-        )  # Attendre 2 secondes avant de vérifier à nouveau l'état de la tâche
+    result = node.lxc.create(**newcontainer)
+    logger.info(f"Container {container_name} (ID: {next_vmid}) a été créé.")
 
     return next_vmid
 
 
 def start_container(proxmox, node_name, vm_id):
-    taskid = proxmox.nodes(node_name).lxc(vm_id).status.start.post()
-
-    while True:
-        task_status = proxmox.nodes(node_name).tasks(taskid).status.get()
-        if task_status["status"] == "stopped":
-            if task_status["exitstatus"] == "OK":
-                logger.info(f"Conteneur (ID: {vm_id}) démarré.")
-            else:
-                logger.error(
-                    f"Échec du démarrage du conteneur (ID: {vm_id}): {task_status['exitstatus']}"
-                )
-            break
-        time.sleep(
-            2
-        )  # Attendre 2 secondes avant de vérifier à nouveau l'état de la tâche
+    result = proxmox.nodes(node_name).lxc(vm_id).status.start.post()
+    logger.info(f"Conteneur (ID: {vm_id}) démarré.")
 
 
 def delete_container(proxmox, node_name, vm_id):
@@ -88,33 +62,7 @@ def delete_container(proxmox, node_name, vm_id):
     if container_status["status"] != "stopped":
         taskid = proxmox.nodes(node_name).lxc(vm_id).status.stop.post()
 
-        while True:
-            task_status = proxmox.nodes(node_name).tasks(taskid).status.get()
-            if task_status["status"] == "stopped":
-                if task_status["exitstatus"] == "OK":
-                    logger.info(f"Conteneur (ID: {vm_id}) arrêté.")
-                else:
-                    logger.error(
-                        f"Échec de l'arrêt du conteneur (ID: {vm_id}): {task_status['exitstatus']}"
-                    )
-                    return
-                break
-            time.sleep(
-                2
-            )  # Attendre 2 secondes avant de vérifier à nouveau l'état de la tâche
+        logger.info(f"Conteneur (ID: {vm_id}) arrêté.")
 
-    taskid = proxmox.nodes(node_name).lxc(vm_id).delete()
-
-    while True:
-        task_status = proxmox.nodes(node_name).tasks(taskid).status.get()
-        if task_status["status"] == "stopped":
-            if task_status["exitstatus"] == "OK":
-                logger.info(f"Conteneur (ID: {vm_id}) supprimé.")
-            else:
-                logger.error(
-                    f"Échec de la suppression du conteneur (ID: {vm_id}): {task_status['exitstatus']}"
-                )
-            break
-        time.sleep(
-            2
-        )  # Attendre 2 secondes avant de vérifier à nouveau l'état de la tâche
+    result = proxmox.nodes(node_name).lxc(vm_id).delete()
+    logger.info(f"Conteneur (ID: {vm_id}) supprimé.")

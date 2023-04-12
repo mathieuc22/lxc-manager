@@ -10,9 +10,9 @@ lxcm = "lxc_manager.lxc_manager:main"
 [tool.poetry.dependencies]
 python = "^3.10"
 proxmoxer = "^2.0.1"
-requests = "^2.28.2"
 python-dotenv = "^1.0.0"
 PyYAML = "^6.0"
+paramiko = "^3.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
