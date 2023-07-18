@@ -1,5 +1,6 @@
-import paramiko
 import logging
+
+import paramiko
 
 logger = logging.getLogger(__name__)
 
