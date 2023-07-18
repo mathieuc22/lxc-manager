@@ -23,4 +23,10 @@ source /opt/venv/bin/activate
 # Met à jour pip, setuptools et wheel
 pip install --upgrade pip setuptools wheel
 
+# Installer et configurer git
+apt-get update
+apt-get install -y git
+git config --global user.name "Mathieu Collet"
+git config --global user.email "mathieu.collet@gmail.com"
+
 echo "Environnement Python configuré avec succès"

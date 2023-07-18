@@ -25,4 +25,10 @@ apt-get install -y dotnet-sdk-7.0
 apt-get update
 apt-get install -y aspnetcore-runtime-7.0
 
+# Installer et configurer git
+apt-get update
+apt-get install -y git
+git config --global user.name "Mathieu Collet"
+git config --global user.email "mathieu.collet@gmail.com"
+
 echo "Environnement C# et .NET configuré avec succès"
